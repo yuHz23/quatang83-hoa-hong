@@ -504,8 +504,9 @@ body {
 
 .letter-container .letter-body {
   color: #ff4757;
-  font-size: 1.35rem;
+  font-size: 1.45rem;
   font-family: 'Dancing Script', cursive;
+  font-weight: bold;
   line-height: 1.5;
   margin-bottom: 12px;
   text-align: justify;
@@ -515,7 +516,7 @@ body {
   font-weight: bold;
   font-family: 'Dancing Script', cursive;
   font-size: 1.45rem;
-  color: #ff6b81;
+  color: #ff4757;
   margin-top: 15px;
 }
 

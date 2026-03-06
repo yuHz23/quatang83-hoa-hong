@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function createPetals() {
+    const petalsContainer = document.getElementById("petals-container");
     if (!petalsContainer) return;
 
     // Create 30 falling petals
