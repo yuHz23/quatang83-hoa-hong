@@ -131,22 +131,19 @@ body {
   }
 }
 
-/* Pure CSS Blooming Flower */
 .css-flower {
   font-size: 80px;
   margin: 0 auto 20px auto;
   animation: cssBloom 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  transform: scale(0);
   filter: drop-shadow(0 10px 15px rgba(255, 105, 135, 0.4));
 }
 
 .css-flower-small {
   position: absolute;
-  top: -50px;
-  right: -20px;
-  font-size: 60px;
-  animation: cssBloom 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s forwards;
-  transform: scale(0);
+  top: -30px;
+  right: 0px;
+  font-size: 45px;
+  animation: cssBloom 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
   filter: drop-shadow(0 5px 10px rgba(255, 105, 135, 0.3));
   z-index: 20;
 }
@@ -502,9 +499,10 @@ body {
   text-align: left;
 }
 
-.letter-container p {
-  color: #555;
-  font-size: 1.1rem;
+.letter-container .letter-body {
+  color: #ff4757;
+  font-size: 1.5rem;
+  font-family: 'Dancing Script', cursive;
   line-height: 1.6;
   margin-bottom: 15px;
   text-align: justify;
@@ -634,11 +632,10 @@ body {
     font-size: 1rem;
   }
 
-  .flower-anim {
-    width: 100px !important;
-    height: 100px !important;
-    top: -50px;
-    right: -10px;
+  .css-flower-small {
+    font-size: 40px;
+    top: -20px;
+    right: 5px;
   }
 
   .flowers {
