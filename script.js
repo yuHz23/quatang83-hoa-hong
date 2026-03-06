@@ -49,10 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 800); // Wait for screen fade
     }, 600); // Wait for flap animation
 });
-});
 
 function createPetals() {
-    const petalsContainer = document.getElementById("petals-container");
     if (!petalsContainer) return;
 
     // Create 30 falling petals
@@ -201,3 +199,4 @@ function createSingleBubble() {
         createSingleBubble();
     }, (duration + delay) * 1000);
 }
+
