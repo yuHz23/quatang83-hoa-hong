@@ -39,16 +39,23 @@ document.addEventListener("DOMContentLoaded", () => {
             welcomeScreen.classList.add("hidden");
             mainScreen.classList.remove("hidden");
 
-            // Play background music at exactly 40 seconds
-            bgMusic.currentTime = 40;
-            bgMusic.play().catch(e => console.log("Audio play failed:", e));
-
             // Start generating floating bubbles and petals
             createBubbles();
             createPetals();
 
             // Start typewriter effect for the letter
             startTypewriter();
+
+            // Play background music at exactly 40 seconds (wrapped to avoid breaking the script if blocked)
+            try {
+                bgMusic.currentTime = 40;
+                let playPromise = bgMusic.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => console.log("Audio play failed:", e));
+                }
+            } catch (e) {
+                console.log("Audio exception:", e);
+            }
         }, 300); // reduced from 800ms waiting for flap
     });
 
