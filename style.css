@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
@@ -106,7 +106,9 @@ body {
   z-index: 4;
   color: white;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.6rem;
+  letter-spacing: 1px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   white-space: nowrap;
 }
@@ -495,7 +497,8 @@ body {
 .letter-container h2 {
   color: #ff4757;
   margin-bottom: 20px;
-  font-size: 1.8rem;
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.4rem;
   text-align: left;
 }
 
@@ -509,6 +512,8 @@ body {
 
 .letter-container .wish {
   font-weight: bold;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.6rem;
   color: #ff6b81;
   margin-top: 20px;
 }
@@ -571,10 +576,9 @@ body {
 .bubble {
   position: absolute;
   bottom: -150px;
-  background-color: white;
-  border-radius: 50%;
+  background-color: transparent;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(255, 105, 135, 0.3);
+  filter: drop-shadow(0 5px 15px rgba(255, 105, 135, 0.6));
   animation: floatUp 8s linear infinite;
   display: flex;
   justify-content: center;
@@ -585,6 +589,14 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  -webkit-mask-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
 }
 
 @keyframes floatUp {
