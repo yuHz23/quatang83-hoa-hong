@@ -22,6 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const envelopeBtn = document.getElementById("envelope-button");
     const bouquet = document.getElementById("bouquet");
 
+    // Initialize welcome screen sparkles and falling hearts
+    createWelcomeEffects();
+
     // Automatically bloom the bouquet after a short delay
     setTimeout(() => {
         bouquet.classList.add("blooming");
@@ -200,5 +203,82 @@ function createSingleBubble() {
         // Create a new one to keep the loop going if needed
         createSingleBubble();
     }, (duration + delay) * 1000);
+}
+
+function createWelcomeEffects() {
+    const sparklesContainer = document.getElementById("sparkles-container");
+    const heartsContainer = document.getElementById("welcome-hearts-container");
+
+    // Create 40 sparkles
+    if (sparklesContainer) {
+        for (let i = 0; i < 40; i++) {
+            const sparkle = document.createElement("div");
+            sparkle.classList.add("sparkle");
+            sparkle.style.left = `${Math.random() * 100}%`;
+            sparkle.style.top = `${Math.random() * 100}%`;
+            sparkle.style.animationDuration = `${Math.random() * 3 + 1.5}s`;
+            sparkle.style.animationDelay = `${Math.random() * 2}s`;
+            sparklesContainer.appendChild(sparkle);
+        }
+    }
+
+    // Create falling hearts
+    if (heartsContainer) {
+        let gyroTilt = 0;
+
+        // Listen to gyroscope
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener("deviceorientation", (event) => {
+                if (event.gamma !== null) {
+                    // limit tilt to reasonable bounds (-45 to 45)
+                    let tilt = event.gamma;
+                    if (tilt > 45) tilt = 45;
+                    if (tilt < -45) tilt = -45;
+
+                    // Smoothly update global tilt var to apply to hearts
+                    gyroTilt = tilt * 1.5; // multiplier for stronger effect
+                    heartsContainer.style.transform = `translateX(${gyroTilt}px)`;
+                }
+            });
+        }
+
+        // Generate hearts loop
+        function spawnWelcomeHeart() {
+            const welcomeScreen = document.getElementById("welcome-screen");
+            if (!welcomeScreen || welcomeScreen.classList.contains("hidden")) return; // Stop if screen went away
+
+            const heart = document.createElement("div");
+            heart.classList.add("welcome-heart");
+            heart.innerHTML = "❤";
+            heart.style.left = `${Math.random() * 100}%`;
+
+            const duration = Math.random() * 5 + 4; // 4s to 9s fall
+            heart.style.animationDuration = `${duration}s`;
+
+            // Randomize size
+            const size = Math.random() * 0.8 + 0.6; // 0.6 to 1.4 rem
+            heart.style.fontSize = `${size}rem`;
+
+            // Randomize animation delay a bit
+            heart.style.animationDelay = `${Math.random() * 2}s`;
+
+            heartsContainer.appendChild(heart);
+
+            // Remove when done
+            setTimeout(() => {
+                if (heart.parentNode === heartsContainer) {
+                    heart.remove();
+                }
+            }, (duration + 2) * 1000);
+
+            // Queue next heart
+            setTimeout(spawnWelcomeHeart, Math.random() * 300 + 200);
+        }
+
+        // Start spawning initial batch
+        for (let i = 0; i < 8; i++) {
+            setTimeout(spawnWelcomeHeart, i * 400);
+        }
+    }
 }
 
