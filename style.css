@@ -175,6 +175,7 @@ body {
   align-items: flex-end;
   margin: 0 auto;
   perspective: 1000px;
+  pointer-events: none;
 }
 
 .bouquet-text {
@@ -477,8 +478,9 @@ body {
 .bouquet-envelope {
   position: absolute;
   bottom: 0px;
-  z-index: 10;
+  z-index: 100;
   transform: scale(0.5);
+  pointer-events: auto;
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 

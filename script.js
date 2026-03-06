@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Animate envelope opening (need to find the child envelope inside the button now)
         envelopeBtn.querySelector('.envelope').classList.add("opening");
 
-        // Wait for flap animation then fade out welcome screen
+        // Wait slightly for flap animation then fade out welcome screen
         setTimeout(() => {
             welcomeScreen.classList.add("hidden");
             mainScreen.classList.remove("hidden");
@@ -49,8 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Start typewriter effect for the letter
             startTypewriter();
-        }, 800); // Wait for screen fade
-    }, 600); // Wait for flap animation
+        }, 300); // reduced from 800ms waiting for flap
+    }, 150); // almost immediate, don't wait 600ms for blooming
+
 });
 
 function createPetals() {
