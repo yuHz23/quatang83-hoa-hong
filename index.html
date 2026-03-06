@@ -347,33 +347,71 @@
         <audio id="bg-music" src="assets/nhac.m4a" loop></audio>
 
         <!-- Lá thư ở giữa -->
-        <div class="letter-container">
-            <!-- Hiệu ứng hoa nở -->
-            <div class="css-flower-small">🌸</div>
+        <div class="letter-wrapper">
+            <div class="letter-container">
+                <!-- Mặt trước -->
+                <div class="letter-content-wrapper letter-front">
+                    <!-- Hiệu ứng hoa nở -->
+                    <div class="css-flower-small">🌸</div>
 
-            <h2 id="typewriter-h2"></h2>
-            <p class="letter-body" id="typewriter-p1"></p>
-            <p class="wish" id="typewriter-p2"></p>
+                    <h2 id="typewriter-h2"></h2>
+                    <p class="letter-body" id="typewriter-p1"></p>
+                    <p class="wish" id="typewriter-p2"></p>
 
-            <!-- Hidden original text for JS to read from -->
-            <div id="hidden-text" style="display: none;">
-                <div id="text-h2">Gửi em người anh thương,</div>
-                <div id="text-p1">Dự báo thời tiết 8/3 năm nay xin thông báo với bé là có một luồng khí nóng mang tên
-                    'tình yêu' đang đổ bộ trực tiếp vào trái tim đó! Tình cảm của anh dành cho em luôn tăng lên thêm mỗi
-                    ngày nhưng riêng hôm nay cho phép anh được thương em hơn mọi ngày gấp nhiều lần nha. Anh định tặng
-                    em một món quà siêu to khổng lồ nhưng tiếc là không có hộp quà nào chứa được anh cả. Thôi thì em
-                    dùng tạm 'tấm thân' này để anh được phép che chở và yêu thương em ít nhất là ở hiện tại nhé!</div>
-                <div id="text-p2">Chúc bé ngày 8/3 thật hạnh phúc, luôn xinh đẹp rạng rỡ, ăn ngon, ngủ đủ, học giỏi và
-                    đừng bao giờ giận anh nha vì anh bận thương bé quá rồi không dỗ kịp đâu!</div>
-            </div>
-            <div class="signature">
-                ❤
+                    <!-- Hidden original text for JS to read from -->
+                    <div id="hidden-text" style="display: none;">
+                        <div id="text-h2">Gửi em người anh thương,</div>
+                        <div id="text-p1">Dự báo thời tiết 8/3 năm nay xin thông báo với bé là có một luồng khí nóng
+                            mang
+                            tên
+                            'tình yêu' đang đổ bộ trực tiếp vào trái tim đó! Tình cảm của anh dành cho em luôn tăng lên
+                            thêm
+                            mỗi
+                            ngày nhưng riêng hôm nay cho phép anh được thương em hơn mọi ngày gấp nhiều lần nha. Anh
+                            định
+                            tặng
+                            em một món quà siêu to khổng lồ nhưng tiếc là không có hộp quà nào chứa được anh cả. Thôi
+                            thì em
+                            dùng tạm 'tấm thân' này để anh được phép che chở và yêu thương em ít nhất là ở hiện tại nhé!
+                        </div>
+                        <div id="text-p2">Chúc bé ngày 8/3 thật hạnh phúc, luôn xinh đẹp, rạng rỡ, ăn ngon, ngủ đủ, học
+                            giỏi
+                            và
+                            đừng bao giờ giận anh nha vì anh bận thương bé quá rồi không dỗ kịp đâu!</div>
+                    </div>
+                    <div class="signature">
+                        <span id="heart-flip-trigger">❤</span>
+                        <!-- Hướng dẫn lật: Mũi tên và ghi chú trỏ vào tim chữ ký -->
+                        <div id="heart-guide" class="hidden">
+                            <div class="arrow-up">⬆️</div>
+                            <p class="heart-note">Chạm vào tim để xem bí mật nha</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mặt sau -->
+                <div class="letter-content-wrapper letter-back-content">
+                    <h3 class="question">Chủ Nhật ra gặp anh nha?</h3>
+                    <div id="back-interaction-area" class="answer-buttons">
+                        <button id="btn-agree" class="btn-primary">Đồng ý</button>
+                        <button id="btn-decline" class="btn-secondary">Từ chối</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Các bong bóng ảnh sẽ bay lên từ dưới -->
-        <div id="bubbles-container"></div>
+        <!-- Màn hình xem ảnh phóng to -->
+        <div id="photo-viewer" class="hidden">
+            <div class="viewer-content">
+                <img id="viewer-img" src="" alt="Photo">
+                <button id="close-viewer">×</button>
+            </div>
+        </div>
+
     </div>
+
+    <!-- Các bong bóng ảnh bay lên - đặt ngoài main-screen để không bị chặn bởi letter-wrapper -->
+    <div id="bubbles-container"></div>
 
     <script src="script.js"></script>
 </body>

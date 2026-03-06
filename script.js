@@ -46,7 +46,10 @@ document.addEventListener("DOMContentLoaded", () => {
             // Start typewriter effect for the letter
             startTypewriter();
 
-            // Play background music at exactly 40 seconds (wrapped to avoid breaking the script if blocked)
+            // Initialize interactions for the back side
+            setupMeetMeInteractions();
+
+            // Play background music
             try {
                 bgMusic.currentTime = 40;
                 let playPromise = bgMusic.play();
@@ -59,6 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 300); // reduced from 800ms waiting for flap
     });
 
+    // NOTE: setupMeetMeInteractions is called inside the envelope click handler
+    // after the main screen loads. DO NOT call it here again or event listeners
+    // will be duplicated and conflict.
 });
 
 function createPetals() {
@@ -158,11 +164,171 @@ function startTypewriter() {
                         // Finally show signature
                         const signature = document.querySelector(".signature");
                         if (signature) signature.classList.add("show");
+
+                        // Show the heart guide after a short delay
+                        setTimeout(() => {
+                            const heartGuide = document.getElementById("heart-guide");
+                            if (heartGuide) {
+                                heartGuide.classList.remove("hidden");
+                                heartGuide.style.animation = "fadeInUp 0.8s ease-out forwards";
+                            }
+                        }, 1000);
                     });
                 }, 500); // Wait half a second before typing wish
             });
         }, 300); // Wait before typing body
     });
+}
+
+function setupMeetMeInteractions() {
+    const flipTrigger = document.getElementById("heart-flip-trigger");
+    const container = document.querySelector(".letter-container");
+    const btnDecline = document.getElementById("btn-decline");
+    const btnAgree = document.getElementById("btn-agree");
+    const interactionArea = document.getElementById("back-interaction-area");
+    const btnFlipBack = document.getElementById("btn-flip-back");
+
+    let declineCount = 0;
+
+    // Flip-back button on the back side
+    if (btnFlipBack) {
+        btnFlipBack.addEventListener("click", (e) => {
+            e.stopPropagation();
+            container.classList.remove("flipped");
+        });
+    }
+
+    if (flipTrigger) {
+        // Toggle flip, but only when the signature is shown (typewriter finished)
+        flipTrigger.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const signature = document.querySelector(".signature");
+            if (signature && signature.classList.contains("show")) {
+                container.classList.toggle("flipped");
+            }
+        });
+    }
+
+
+
+    const handleAgree = () => {
+        const overlay = document.createElement("div");
+        overlay.style.cssText = `
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); display: flex; justify-content: center;
+            align-items: center; z-index: 3000; backdrop-filter: blur(10px);
+        `;
+
+        const modal = document.createElement("div");
+        modal.style.cssText = `
+            background: white; padding: 40px; border-radius: 30px;
+            text-align: center; max-width: 85%; box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 5px solid #ff7eb3;
+        `;
+
+        modal.innerHTML = `
+            <div style="font-size: 60px; margin-bottom: 20px;">💖🌸</div>
+            <h2 style="color: #ff4757; font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin-bottom: 20px;">Ôi bé đồng ý rồi nha!</h2>
+            <p style="font-size: 1.2rem; color: #444; line-height: 1.8; margin-bottom: 30px;">
+                Cảm ơn người thương của anh nhiều thiệt nhiều! 🥰<br>
+                Hẹn gặp bé Chủ Nhật này nha anh sẽ mang bó hoa thật xinh đến với bé nhé!<br>
+                Thương bé nhất trên đời luôn! ❤️
+            </p>
+            <button class="btn-primary" id="btn-modal-close" style="padding: 15px 40px; font-size: 1.2rem;">Hẹn gặp bé nhé! 🌹</button>
+        `;
+
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+
+        document.getElementById("btn-modal-close").onclick = () => {
+            overlay.remove();
+            // Flip back to the letter front after closing
+            const c = document.querySelector(".letter-container");
+            if (c) c.classList.remove("flipped");
+        };
+    };
+
+    if (btnDecline) {
+        btnDecline.addEventListener("click", (e) => {
+            e.stopPropagation();
+            declineCount++;
+
+            if (declineCount <= 3) {
+                // Get bounds of the interaction area specifically
+                const areaRect = interactionArea.getBoundingClientRect();
+                const btnWidth = btnDecline.offsetWidth;
+                const btnHeight = btnDecline.offsetHeight;
+
+                // Move within the back side container instead of absolute body
+                // Using relative positioning relative to interactionArea
+                btnDecline.style.position = "absolute";
+
+                const maxX = areaRect.width - btnWidth;
+                const maxY = areaRect.height - btnHeight + 50; // allow a bit of vertical range
+
+                const randomX = Math.random() * maxX;
+                const randomY = (Math.random() * maxY) - 50; // allow moving up slightly
+
+                btnDecline.style.left = `${randomX}px`;
+                btnDecline.style.top = `${randomY}px`;
+                btnDecline.style.transition = "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+
+                // Add a cute shake or frustration animation to the button
+                btnDecline.animate([
+                    { transform: 'translateX(0)' },
+                    { transform: 'translateX(-5px)' },
+                    { transform: 'translateX(5px)' },
+                    { transform: 'translateX(0)' }
+                ], { duration: 200, iterations: 2 });
+            }
+
+            if (declineCount >= 3) {
+                // On 3rd click show intent, on 4th it becomes Agree
+                if (declineCount === 3) {
+                    btnDecline.innerText = "Ơ kìa...";
+                } else {
+                    btnDecline.innerText = "Thôi Đồng ý đi mà ❤️";
+                    btnDecline.classList.remove("btn-secondary");
+                    btnDecline.classList.add("btn-primary");
+                    btnDecline.style.position = "static";
+                    btnDecline.style.transform = "scale(1.2)";
+                    btnDecline.onclick = handleAgree;
+                }
+            }
+        });
+    }
+
+    if (btnAgree) {
+        btnAgree.addEventListener("click", (e) => {
+            e.stopPropagation();
+            handleAgree();
+        });
+    }
+}
+
+// Global audio for pop sound
+const popSound = new Audio("https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"); // Cute pop sound
+
+function showPhotoViewer(imgSrc) {
+    const photoViewer = document.getElementById("photo-viewer");
+    const viewerImg = document.getElementById("viewer-img");
+    const closeViewer = document.getElementById("close-viewer");
+
+    if (photoViewer && viewerImg) {
+        viewerImg.src = imgSrc;
+        photoViewer.classList.remove("hidden");
+
+        // Play pop sound
+        popSound.currentTime = 0;
+        popSound.play().catch(e => console.log("Sound error:", e));
+
+        // Setup close events
+        closeViewer.onclick = () => photoViewer.classList.add("hidden");
+        photoViewer.onclick = (e) => {
+            if (e.target === photoViewer) photoViewer.classList.add("hidden");
+        };
+    }
 }
 
 function createBubbles() {
@@ -185,6 +351,11 @@ function createSingleBubble() {
     const randomImg = imageList[Math.floor(Math.random() * imageList.length)];
     img.src = "assets/" + randomImg;
     bubble.appendChild(img);
+
+    // Make bubble clickable for photo viewing
+    bubble.onclick = () => {
+        showPhotoViewer(img.src);
+    };
 
     // Randomize size between 60px and 120px
     const size = Math.floor(Math.random() * 60) + 60;
