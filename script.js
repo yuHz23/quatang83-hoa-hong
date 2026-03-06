@@ -323,11 +323,14 @@ function showPhotoViewer(imgSrc) {
         popSound.currentTime = 0;
         popSound.play().catch(e => console.log("Sound error:", e));
 
-        // Setup close events
-        closeViewer.onclick = () => photoViewer.classList.add("hidden");
-        photoViewer.onclick = (e) => {
-            if (e.target === photoViewer) photoViewer.classList.add("hidden");
-        };
+        // Support both click and touch for mobile close
+        const closeViewer = document.getElementById("close-viewer");
+        const doClose = (e) => { e.stopPropagation(); photoViewer.classList.add("hidden"); };
+        const doCloseOverlay = (e) => { if (e.target === photoViewer) photoViewer.classList.add("hidden"); };
+        closeViewer.onclick = doClose;
+        closeViewer.ontouchend = doClose;
+        photoViewer.onclick = doCloseOverlay;
+        photoViewer.ontouchend = doCloseOverlay;
     }
 }
 
@@ -352,10 +355,14 @@ function createSingleBubble() {
     img.src = "assets/" + randomImg;
     bubble.appendChild(img);
 
-    // Make bubble clickable for photo viewing
-    bubble.onclick = () => {
+    // Make bubble clickable/tappable for photo viewing (mobile-friendly)
+    const openViewer = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         showPhotoViewer(img.src);
     };
+    bubble.addEventListener('click', openViewer);
+    bubble.addEventListener('touchend', openViewer, { passive: false });
 
     // Randomize size between 60px and 120px
     const size = Math.floor(Math.random() * 60) + 60;
