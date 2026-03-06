@@ -33,22 +33,126 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Wait for flap animation then fade out welcome screen
         setTimeout(() => {
-            welcomeScreen.style.opacity = "0";
+            welcomeScreen.classList.add("hidden");
+            mainScreen.classList.remove("hidden");
 
-            setTimeout(() => {
-                welcomeScreen.classList.add("hidden");
-                mainScreen.classList.remove("hidden");
+            // Play background music at exactly 40 seconds
+            bgMusic.currentTime = 40;
+            bgMusic.play().catch(e => console.log("Audio play failed:", e));
 
-                // Play background music at exactly 40 seconds
-                bgMusic.currentTime = 40;
-                bgMusic.play().catch(e => console.log("Audio play failed:", e));
+            // Start generating floating bubbles and petals
+            createBubbles();
+            createPetals();
 
-                // Start generating floating bubbles
-                createBubbles();
-            }, 800); // Wait for screen fade
-        }, 600); // Wait for flap animation
-    });
+            // Start typewriter effect for the letter
+            startTypewriter();
+        }, 800); // Wait for screen fade
+    }, 600); // Wait for flap animation
 });
+});
+
+function createPetals() {
+    const petalsContainer = document.getElementById("petals-container");
+    if (!petalsContainer) return;
+
+    // Create 30 falling petals
+    for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+            const petal = document.createElement("div");
+            petal.classList.add("petal");
+
+            // Randomize size, position, and duration
+            const size = Math.random() * 10 + 10; // 10px to 20px
+            petal.style.width = `${size}px`;
+            petal.style.height = `${size}px`;
+
+            petal.style.left = `${Math.random() * 100}vw`;
+
+            const duration = Math.random() * 8 + 6; // 6s to 14s
+            petal.style.animationDuration = `${duration}s`;
+
+            // Randomize starting delay
+            petal.style.animationDelay = `${Math.random() * 5}s`;
+
+            petalsContainer.appendChild(petal);
+
+            // Remove and recreate petal when it falls down
+            setTimeout(() => {
+                petal.remove();
+                createSinglePetal(petalsContainer);
+            }, (duration + 5) * 1000);
+        }, i * 300);
+    }
+}
+
+function createSinglePetal(container) {
+    if (!container) return;
+    const petal = document.createElement("div");
+    petal.classList.add("petal");
+
+    const size = Math.random() * 10 + 10;
+    petal.style.width = `${size}px`;
+    petal.style.height = `${size}px`;
+    petal.style.left = `${Math.random() * 100}vw`;
+
+    const duration = Math.random() * 8 + 6;
+    petal.style.animationDuration = `${duration}s`;
+
+    container.appendChild(petal);
+
+    setTimeout(() => {
+        petal.remove();
+        createSinglePetal(container);
+    }, duration * 1000);
+}
+
+function startTypewriter() {
+    const speed = 40; // typing speed in ms
+
+    // Source texts
+    const textH2 = document.getElementById("text-h2").innerHTML;
+    const textP1 = document.getElementById("text-p1").innerHTML;
+    const textP2 = document.getElementById("text-p2").innerHTML;
+
+    // Destination elements
+    const destH2 = document.getElementById("typewriter-h2");
+    const destP1 = document.getElementById("typewriter-p1");
+    const destP2 = document.getElementById("typewriter-p2");
+
+    function typeWriter(text, element, callback) {
+        element.innerHTML = "";
+        element.classList.add("typewriter-cursor");
+
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                // Handle HTML entities correctly if any, but simplistic approach for plain text
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            } else {
+                element.classList.remove("typewriter-cursor");
+                if (callback) callback();
+            }
+        }
+        type();
+    }
+
+    // Sequence the typing
+    typeWriter(textH2, destH2, () => {
+        setTimeout(() => {
+            typeWriter(textP1, destP1, () => {
+                setTimeout(() => {
+                    typeWriter(textP2, destP2, () => {
+                        // Finally show signature
+                        const signature = document.querySelector(".signature");
+                        if (signature) signature.classList.add("show");
+                    });
+                }, 500); // Wait half a second before typing wish
+            });
+        }, 300); // Wait before typing body
+    });
+}
 
 function createBubbles() {
     // Number of bubbles to show

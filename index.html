@@ -333,6 +333,9 @@
     <!-- Màn hình chính -->
     <div id="main-screen" class="hidden">
 
+        <!-- Hiệu ứng cánh hoa rơi -->
+        <div id="petals-container"></div>
+
         <!-- Nhạc nền -->
         <audio id="bg-music" src="assets/nhac.m4a" loop></audio>
 
@@ -341,18 +344,21 @@
             <!-- Hiệu ứng hoa nở -->
             <div class="css-flower-small">🌸</div>
 
-            <h2>Gửi em người anh thương,</h2>
-            <p class="letter-body">
-                Dự báo thời tiết 8/3 năm nay xin thông báo với bé là có một luồng khí nóng mang tên 'tình yêu' đang đổ
-                bộ trực tiếp vào trái tim đó! Tình cảm của anh dành cho em luôn tăng lên thêm mỗi ngày nhưng riêng hôm
-                nay cho phép anh được thương em hơn mọi ngày gấp nhiều lần nha. Anh định tặng em một món quà siêu to
-                khổng lồ nhưng tiếc là không có hộp quà nào chứa được anh cả. Thôi thì em dùng tạm 'tấm thân' này để anh
-                được phép che chở và yêu thương em ít nhất là ở hiện tại nhé!
-            </p>
-            <p class="wish">
-                Chúc bé ngày 8/3 thật hạnh phúc, luôn xinh đẹp rạng rỡ, ăn ngon, ngủ đủ, học giỏi và đừng bao giờ giận
-                anh nha vì anh bận thương em quá rồi không dỗ kịp đâu!
-            </p>
+            <h2 id="typewriter-h2"></h2>
+            <p class="letter-body" id="typewriter-p1"></p>
+            <p class="wish" id="typewriter-p2"></p>
+
+            <!-- Hidden original text for JS to read from -->
+            <div id="hidden-text" style="display: none;">
+                <div id="text-h2">Gửi em người anh thương,</div>
+                <div id="text-p1">Dự báo thời tiết 8/3 năm nay xin thông báo với bé là có một luồng khí nóng mang tên
+                    'tình yêu' đang đổ bộ trực tiếp vào trái tim đó! Tình cảm của anh dành cho em luôn tăng lên thêm mỗi
+                    ngày nhưng riêng hôm nay cho phép anh được thương em hơn mọi ngày gấp nhiều lần nha. Anh định tặng
+                    em một món quà siêu to khổng lồ nhưng tiếc là không có hộp quà nào chứa được anh cả. Thôi thì em
+                    dùng tạm 'tấm thân' này để anh được phép che chở và yêu thương em ít nhất là ở hiện tại nhé!</div>
+                <div id="text-p2">Chúc bé ngày 8/3 thật hạnh phúc, luôn xinh đẹp rạng rỡ, ăn ngon, ngủ đủ, học giỏi và
+                    đừng bao giờ giận anh nha vì anh bận thương em quá rồi không dỗ kịp đâu!</div>
+            </div>
             <div class="signature">
                 ❤
             </div>
