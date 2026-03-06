@@ -719,12 +719,14 @@ body {
   }
 
   .flowers {
-    transform: scale(1.1) translateY(-20px) !important;
+    transform: translateX(-50%) scale(1) translateY(-60px) !important;
+    left: 50% !important;
   }
 
   .bouquet-envelope {
-    bottom: 80px !important;
-    transform: scale(0.8) !important;
+    bottom: 120px !important;
+    left: 50% !important;
+    transform: translateX(-50%) scale(0.8) !important;
   }
 }
 
