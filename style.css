@@ -502,6 +502,14 @@ body {
   text-align: left;
 }
 
+.letter-container .typed-text {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  line-height: inherit;
+}
+
 .letter-container .letter-body {
   color: #ff4757;
   font-size: 1.45rem;
@@ -534,21 +542,33 @@ body {
   animation: heartbeat 1.5s infinite;
 }
 
-/* Typewriter Cursor */
-.typewriter-cursor::after {
-  content: '|';
-  animation: blink 1s step-end infinite;
+/* Animated Pen */
+.pen {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  /* SVG of a cute feather pen or writing pen in red (#ff4757) */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff4757'%3E%3Cpath d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  margin-left: 2px;
+  vertical-align: bottom;
+  transform-origin: bottom left;
+  animation: writing 0.35s ease-in-out infinite alternate;
 }
 
-@keyframes blink {
-
-  0%,
-  100% {
-    opacity: 1;
+@keyframes writing {
+  0% {
+    transform: rotate(0deg) translateY(0);
   }
 
   50% {
-    opacity: 0;
+    transform: rotate(-15deg) translateY(-2px);
+  }
+
+  100% {
+    transform: rotate(5deg) translateY(0);
   }
 }
 

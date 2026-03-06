@@ -119,18 +119,19 @@ function startTypewriter() {
     const destP2 = document.getElementById("typewriter-p2");
 
     function typeWriter(text, element, callback) {
-        element.innerHTML = "";
-        element.classList.add("typewriter-cursor");
+        element.innerHTML = '<span class="typed-text"></span><span class="pen"></span>';
+        const textSpan = element.querySelector('.typed-text');
+        const penSpan = element.querySelector('.pen');
 
         let i = 0;
         function type() {
             if (i < text.length) {
-                // Handle HTML entities correctly if any, but simplistic approach for plain text
-                element.innerHTML += text.charAt(i);
+                // If it's an HTML entity or break, we should ideally handle it, but plain text works well
+                textSpan.innerHTML += text.charAt(i);
                 i++;
                 setTimeout(type, speed);
             } else {
-                element.classList.remove("typewriter-cursor");
+                penSpan.remove(); // Remove the pen so it moves to the next section
                 if (callback) callback();
             }
         }
