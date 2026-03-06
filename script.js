@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Start typewriter effect for the letter
             startTypewriter();
         }, 300); // reduced from 800ms waiting for flap
-    }, 150); // almost immediate, don't wait 600ms for blooming
+    });
 
 });
 
