@@ -1,16 +1,5 @@
-const imageList = [
-    "08aef0a4-70a5-4aab-8653-77a95c2ce6a8.jpg",
-    "0db28a88-f5b1-4867-ae2c-818d771f44c1.jpg",
-    "267a78fb-47bd-4b52-af24-efc202da07d6.jpg",
-    "486fc3a7-2feb-42b6-b9aa-2b66ffe4b4f6.jpg",
-    "4fd2b28f-fa6c-45c9-9ec5-422e61c8b78b.jpg",
-    "5dde6872-64d4-4a17-9571-5947d80f7cc4.jpg",
-    "6160ecd8-17b6-4653-b122-521d94f472b7.jpg",
-    "62116772-59e1-4fd8-b780-3efbbe09c5b2.jpg",
-    "9e857cd7-5fd7-4053-b353-23b92f05d15a.jpg",
-    "d4124338-7768-442a-a762-4119ebddae40.jpg",
-    "e2af688f-997f-49e6-882a-457655a4d923.jpg"
-];
+// imageList removed as bubbles now use hearts
+
 let bubblesContainer = null;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -232,7 +221,7 @@ function setupMeetMeInteractions() {
             <h2 style="color: #ff4757; font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin-bottom: 20px;">Ôi bé đồng ý rồi nha!</h2>
             <p style="font-size: 1.2rem; color: #444; line-height: 1.8; margin-bottom: 30px;">
                 Cảm ơn người thương của anh nhiều thiệt nhiều! 🥰<br>
-                Hẹn gặp bé Chủ Nhật này nha anh sẽ mang bó hoa thật xinh đến với bé nhé!<br>
+                Thứ 7 này đi chơi với anh nha ❤️<br>
                 Thương bé nhất trên đời luôn! ❤️
             </p>
             <button class="btn-primary" id="btn-modal-close" style="padding: 15px 40px; font-size: 1.2rem;">Hẹn gặp bé nhé! 🌹</button>
@@ -349,20 +338,15 @@ function createSingleBubble() {
     const bubble = document.createElement("div");
     bubble.classList.add("bubble");
 
-    // Randomize image
-    const img = document.createElement("img");
-    const randomImg = imageList[Math.floor(Math.random() * imageList.length)];
-    img.src = "assets/" + randomImg;
-    bubble.appendChild(img);
+    // Set heart symbol
+    bubble.innerHTML = "❤️";
+    bubble.style.display = "flex";
+    bubble.style.justifyContent = "center";
+    bubble.style.alignItems = "center";
+    bubble.style.fontSize = "2rem";
+    bubble.style.color = "#ff4757";
+    bubble.style.textShadow = "0 0 10px rgba(255, 71, 87, 0.5)";
 
-    // Make bubble clickable/tappable for photo viewing (mobile-friendly)
-    const openViewer = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        showPhotoViewer(img.src);
-    };
-    bubble.addEventListener('click', openViewer);
-    bubble.addEventListener('touchend', openViewer, { passive: false });
 
     // Randomize size between 60px and 120px
     const size = Math.floor(Math.random() * 60) + 60;
