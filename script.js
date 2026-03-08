@@ -218,10 +218,9 @@ function setupMeetMeInteractions() {
 
         modal.innerHTML = `
             <div style="font-size: 60px; margin-bottom: 20px;">💖🌸</div>
-            <h2 style="color: #ff4757; font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin-bottom: 20px;">Ôi bé đồng ý rồi nha!</h2>
+            <h2 style="color: #ff4757; font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin-bottom: 20px;">Bé đồng ý rồi á nha!</h2>
             <p style="font-size: 1.2rem; color: #444; line-height: 1.8; margin-bottom: 30px;">
                 Cảm ơn người thương của anh nhiều thiệt nhiều! 🥰<br>
-                Thứ 7 này đi chơi với anh nha ❤️<br>
                 Thương bé nhất trên đời luôn! ❤️
             </p>
             <button class="btn-primary" id="btn-modal-close" style="padding: 15px 40px; font-size: 1.2rem;">Hẹn gặp bé nhé! 🌹</button>
